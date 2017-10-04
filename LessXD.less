@@ -1,0 +1,66 @@
+
+.bg-G ( @start:#e1eefe, @end:#b4deff) {
+	background: @start;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@start), color-stop(100%,@end));
+	background: -ms-linear-gradient(top, @start 0%,@end 100%);
+	background: linear-gradient(to bottom, @start 0%,@end 100%);
+}
+
+.o-E {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.trs ( @target: all 0.3s ease ) {
+	-webkit-transition:	@target;
+	transition: @target;
+}
+
+.text-stroke ( @color: #CCC ) {
+	text-shadow: 2px 0 0 @color, -2px 0 0 @color, 0 2px 0 @color, 0 -2px 0 @color, 1px 1px @color, -1px -1px 0 @color, 1px -1px 0 @color, -1px 1px 0 @color;
+}
+
+.for(@list, @code) {
+	& {
+		.loop(@i:1) when (@i =< length(@list)) {
+			@value: extract(@list, @i);
+			@code();
+			.loop(@i + 1);
+		}
+		.loop();
+	}
+}
+
+// Imges set exsample.
+
+// @image-weapon-set:
+// fire-back 256 404,
+// fire-body 160 500,
+// fire-front 180 285,
+// fire-mid 239 178,
+// fire-star 120 120,
+// water-back 420 480,
+// water-body 200 680,
+// water-front 290 390,
+// water-mid 230 320,
+// water-star 120 120,
+// wind-back 200 355,
+// wind-body 160 500,
+// wind-front 220 465,
+// wind-mid 175 520,
+// wind-star 120 120;
+
+// .for(@image-weapon-set, {
+
+// 	@pair:		extract(@list, @i);
+// 	@name:	extract(@pair, 1);
+// 	@width:	extract(@pair, 2);
+// 	@height:	extract(@pair, 3);
+
+// 	.@{name} {
+// 		width: @width * 1px;
+// 		height: @height * 1px;
+// 		background-image: url("@{image}weapon/@{name}.png");
+// 	}
+// });
