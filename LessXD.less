@@ -6,12 +6,6 @@
 	background: linear-gradient(to bottom, @start 0%,@end 100%);
 }
 
-.o-E {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis
-}
-
 .trs ( @target: all 0.3s ease ) {
 	-webkit-transition:	@target;
 	transition: @target;
@@ -32,35 +26,72 @@
 	}
 }
 
+.loop(@counter, @code) {
+	& {
+		.loop(@index:1) when (@index =< @counter) {
+			@code();
+			.loop(@index + 1);
+		}
+		.loop();
+	}
+}
+
+// .loop(5,{
+// 	.chara-@{index} {
+// 		.chara-img {
+// 			background-image: url("@{image}index/chara/img/@{index}.png");
+// 		}
+// 	}
+// });
 // Imges set exsample.
 
-// @image-weapon-set:
-// fire-back 256 404,
-// fire-body 160 500,
-// fire-front 180 285,
-// fire-mid 239 178,
-// fire-star 120 120,
-// water-back 420 480,
-// water-body 200 680,
-// water-front 290 390,
-// water-mid 230 320,
-// water-star 120 120,
-// wind-back 200 355,
-// wind-body 160 500,
-// wind-front 220 465,
-// wind-mid 175 520,
-// wind-star 120 120;
+//stackoverflow.com/questions/21440789/loop-through-array-of-variable-names-in-less
+.makeRandom(@min: 0, @max: @min+1, @int: 0) {
+	.checkInt() {
+		@getNum: `Math.random() * (@{max} - @{min} + @{int})`;
+		@base: unit(`@{int} == 1 ? Math.floor(@{getNum}) : @{getNum}`);
+	}
+	.checkInt();
+	@rand: @base + @min;
+}
 
-// .for(@image-weapon-set, {
+.makeRandom(0, 99, 1);
 
-// 	@pair:		extract(@list, @i);
-// 	@name:	extract(@pair, 1);
-// 	@width:	extract(@pair, 2);
-// 	@height:	extract(@pair, 3);
+// @image-clue:
+// 01 23 26 35 1,
+// 02 29 23 18 18,
+// 03 36 25 59 39,
+// 04 23 31 42 63,
+// 05 12 21 32 6,
+// 06 26 35 29 18,
+// 07 23 29 28 43,
+// 08 34 45.4 25 64,
+// 09 19 27 27 1,
+// 10 68 53 28 30,
+// 11 13 18 12 63,
+// 12 35 30 15 62,
+// 13 35 41 40 1,
+// 14 19 27 37 35,
+// 15 46 30.5 2.2 37,
+// 16 30 31 42 61,
+// 17 36 35.8 32 3,
+// 18 30 37 25 38,
+// 19 37 37 48 52,
+// 20 18 20 29 79;
 
-// 	.@{name} {
-// 		width: @width * 1px;
-// 		height: @height * 1px;
-// 		background-image: url("@{image}weapon/@{name}.png");
+// .for(@image-clue, {
+// 	.clue-item-@{i} {
+
+// 		@id: extract(@value, 1);
+// 		@width: extract(@value, 2);
+// 		@height: extract(@value, 3);
+// 		@top: extract(@value, 4);
+// 		@left: extract(@value, 5);
+
+// 		width: @width * 1%;
+// 		padding-bottom: @height * 1%;
+// 		top: @top * 1%;
+// 		left: @left * 1%;
+// 		background-image: url("@{image}clue/@{i}.png");
 // 	}
 // });
